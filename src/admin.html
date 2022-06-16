@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="text/javascript">
+    const url = 'http://localhost:3000';
+    const eventSource = new EventSource(`${url}/sse`);
+    let oldChild;
+    eventSource.onmessage = ({ data }) => {
+      const message = document.createElement('li');
+      message.innerText = 'New message: ' + data;
+      if (oldChild) {
+        document.body.replaceChild(message, oldChild);
+      } else {
+        document.body.appendChild(message);
+      }
+      oldChild = message;
+    };
+  </script>
+</head>
+
+<body>
+  <div>This is the admin view</div>
+</body>
+</html>
